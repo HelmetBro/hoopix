@@ -37,12 +37,12 @@ public:
 
     bool isConnected = WiFi.status() == WL_CONNECTED;
 
-  #if DEBUG
+#if DEBUG
     if (isConnected)
       Serial.println("Connected to WiFi");
     else
       Serial.println("Failed to connect to WiFi");
-  #endif
+#endif
 
     return isConnected;
   }
@@ -53,7 +53,9 @@ public:
 
   void disconnect() {
     WiFi.disconnect();
+#if DEBUG
     Serial.println("Disconnected from WiFi");
+#endif
   }
 
   // this is an override, remove and replace

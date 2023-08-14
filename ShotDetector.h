@@ -36,21 +36,21 @@ struct ShotDetector {
     static uint16_t threshold = HOLD_DURATION / smartWait.initTime;
 
     if (!smartWait.timePassed())
-        return false;
+      return false;
 
     VL53L4CD_Result_t results;
     g_tofSensor.VL53L4CD_GetResult(&results);
     uint16_t distance = results.distance_mm;
 
     if (distance >= HOLD_SHORT_DISTANCE && distance <= HOLD_LONG_DISTANCE) {
-        consistentMeasurements++;
+      consistentMeasurements++;
     } else {
-        consistentMeasurements = 0; // reset
+      consistentMeasurements = 0; // reset
     }
 
     if (consistentMeasurements >= threshold) {
-        consistentMeasurements = 0; // reset counter for next detection
-        return true;
+      consistentMeasurements = 0; // reset counter for next detection
+      return true;
     }
 
     return false;

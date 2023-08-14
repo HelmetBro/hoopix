@@ -22,13 +22,13 @@ private:
 #endif
   }
 
-    // blocking
-    void connectedAnimation() {
+  // blocking
+  void connectedAnimation() {
 #if DEBUG
-      Serial.print("connected!");
-      delay(2000);
+    Serial.print("connected!");
+    delay(2000);
 #endif
-    }
+  }
 
 public:
   BluetoothConnectState() : 
@@ -36,12 +36,14 @@ public:
     timeoutWait(TIMEOUT, SmartWait::MILLIS) {}
 
   STATE step() override {
-    if(timeoutWait.timePassed())
+    if(timeoutWait.timePassed()) {
+      bluetooth->stopAdvertising();
       return STATE::NORMAL;
+    }
 
     bluetoothAnimationStep(animationStepWait);
 
-    bluetooth->connect();
+    bluetooth->startAdvertising();
 
     if (bluetooth->isConnected()) {
       connectedAnimation();

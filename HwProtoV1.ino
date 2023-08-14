@@ -41,7 +41,7 @@ void setup() {
     case WAS_AWAKE:
       g_state->power->awakenAnimation();
       break;
-    default: break; // TODO: invalid state
+    default: break; // error
   }
 }
 
@@ -52,18 +52,18 @@ void loop() {
     oldState = newState;
     delete g_state;
     switch(oldState) {
-        case STATE::NORMAL: 
-          g_state = new NormalState(); 
-          break;
-        case STATE::BLUETOOTH_CONNECT:
-          g_state = new BluetoothConnectState();
-          break;
-        default: break;
-          //error
+      case STATE::NORMAL: 
+        g_state = new NormalState(); 
+        break;
+      case STATE::BLUETOOTH_CONNECT:
+        g_state = new BluetoothConnectState();
+        break;
+      default: break; // error
     }
   }
   // This is intended to slow down the progam a little. Need to see if this is necessary.
   // Could possible save on power. Also need to look into lowering the clock speed to save
   // more power.
+  // setCpuFrequencyMhz
   delay(1);
 }
